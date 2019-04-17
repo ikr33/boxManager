@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import json
+
+with open('/etc/config.json') as config_file:
+	config = json.load(config_file)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8*b^w8r=dy$xgu^dv-4bfs=eulb_b5%(4_zlgcrvqa0#r@wpco'
+SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -136,9 +140,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 #EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
-EMAIL_HOST_USER  = 'nivdeveloper@gmail.com'
-EMAIL_HOST_PASSWORD = 'razrabotka100'
+#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')EMAIL_HOST_USER  = ''
+EMAIL_HOST_PASSWORD = ''
 #EMAIL_HOST_PASSWORD = 'ytnvawivdyicmneq'
 
 #EMAIL_HOST = '127.0.0.1'
@@ -147,5 +150,5 @@ EMAIL_HOST_PASSWORD = 'razrabotka100'
 #EMAIL_USE_SSL = False
 #EMAIL_HOST_USER  = ''
 #EMAIL_HOST_PASSWORD = ''
-#EMAIL_HOST_USER  = 'nivdeveloper@gmail.com'
-#EMAIL_HOST_PASSWORD = 'razrabotka100'
+EMAIL_HOST_USER  = config.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config.get('EMAIL_PASS')
