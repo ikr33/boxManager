@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin,\
     UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -16,6 +17,7 @@ from .models import Post
 
 # Create your views here.
 
+@login_required
 def home(request):
     context = {
         'posts':Post.objects.all()
@@ -23,10 +25,36 @@ def home(request):
     return render(request,'blog/home.html',context)
 
 
+@login_required
+def SecurePostListView( **kwargs):
+    return PostListView.as_view(**kwargs)
+
+@login_required
+def SecureUserPostListView():
+    UserPostListView.as_view()
+
+
+@login_required
+def SecurePostDetailView():
+    PostDetailView.as_view()
+
+
+@login_required
+def SecurePostCreateView():
+    PostCreateView.as_view()
+
+@login_required
+def SecurePostUpdateView():
+    PostUpdateView.as_view()
+
+@login_required
+def SecurePostDeleteView():
+    PostDeleteView.as_view()
 
 # this class requires the following template by default,
 # but we override  template name with home.html
 #<app>/<model>_<viewtype>.html, something like: blog/post_list.html
+
 class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html'
@@ -45,8 +73,10 @@ class UserPostListView(ListView):
         user = get_object_or_404(User,username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-data_posted')
 
+
 class PostDetailView(DetailView):
     model = Post
+
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
@@ -55,6 +85,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
 
 class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Post
