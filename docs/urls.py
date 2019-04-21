@@ -13,15 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 from .views import (
-    DocListView
+    DocListView,
+    MainListView
 )
 from . import views
 
+my_view = DocListView.as_view()
+my_view = login_required(my_view)
+
 urlpatterns = [
-    path('', DocListView.as_view(),name ='docs-home'),
+    path('', MainListView.as_view(),name ='main-home'),
+    path('docs',my_view, name='docs-home'),
     path('about', views.about,name ='docs-about'),
 
 ]

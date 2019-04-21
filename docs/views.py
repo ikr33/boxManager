@@ -24,6 +24,7 @@ def home(request):
 
 
 
+
 # this class requires the following template by default,
 # but we override  template name with home.html
 #<app>/<model>_<viewtype>.html, something like: blog/post_list.html
@@ -31,6 +32,9 @@ class DocListView(ListView):
     model = User
     template_name = 'docs/home.html'
 
+class MainListView(ListView):
+    model = User
+    template_name = 'docs/main.html'
 
 
 
