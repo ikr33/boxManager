@@ -35,6 +35,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
+    'filebrowser',
+    'filemanager',
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'docs.apps.DocsConfig',

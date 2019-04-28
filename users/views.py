@@ -3,6 +3,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
+from django.conf import settings
+from filemanager import FileManager
+import os
+
+
 
 # Create your views here.
 
@@ -12,12 +17,21 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+#           create folder
+            newpath = settings.MEDIA_ROOT + "/" + username
+            if not os.path.exists(newpath):
+                os.makedirs(newpath)
             messages.success(request, f'Account created for {username}! You can login now')
             return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
 
+def view(request, path):
+    extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png']
+    user = request.user
+    fm = FileManager(settings.MEDIA_ROOT+"/"+user.username, extensions=extensions)
+    return fm.render(request,path)
 
 @login_required
 def profile(request):

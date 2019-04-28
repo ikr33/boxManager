@@ -16,12 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
+
 from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
+from filebrowser.sites import site
+from django.conf.urls import url
+from filemanager import path_end
 
 
 urlpatterns = [
+    path ('admin/filebrowser/',site.urls),
+    path ('grappelli/', include ('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('register/',user_views.register,name="register"),
     path('profile/',user_views.profile,name="profile"),
@@ -41,7 +47,8 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"),
          name="password_reset_complete"),
     path('blog/', include('blog.urls')),
-    path('', include('docs.urls'))
+    path('', include('docs.urls')),
+    url(r'^abc/'+path_end,user_views.view, name='view')
 
 ]
 
