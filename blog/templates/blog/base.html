@@ -5,30 +5,45 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
 
-  <!-- If IE use the latest rendering engine -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- If IE use the latest rendering engine -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <!-- Set the page to the width of the device and set the zoon level -->
-  <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <!-- Set the page to the width of the device and set the zoon level -->
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
 
-<!--
- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
--->
+    <!--
+     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    -->
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
-
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/mystyle.css' %}">
+    <style>
+        .jumbotron {
+            background-color: #2E2D88;
+            color: white;
+        }
 
+        /* Adds borders for tabs */
+        .tab-content {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
 
+        .nav-tabs {
+            margin-bottom: 0;
+        }
+    </style>
     {% if title %}
         <title>Forum - {{ title }}</title>
     {% else %}
         <title>Forum</title>
     {% endif %}
-
 
 
 </head>

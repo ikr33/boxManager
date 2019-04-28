@@ -27,11 +27,14 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
 
+
+@login_required
 def view(request, path):
-    extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png']
+    extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png','pdf','mp3']
     user = request.user
     fm = FileManager(settings.MEDIA_ROOT+"/"+user.username, extensions=extensions)
     return fm.render(request,path)
+
 
 @login_required
 def profile(request):
