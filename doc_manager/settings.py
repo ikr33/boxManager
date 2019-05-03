@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import json
 
-with open('/etc/config.json') as config_file:
+jsonPath = os.getenv('configjsonPath','')
+with open(jsonPath+'/etc/config.json') as config_file:
 	config = json.load(config_file)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
