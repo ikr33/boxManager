@@ -106,6 +106,9 @@
   <div id="delete-file" class="menu-option" onclick="do_action('delete','file')">
    <img src="{% static "filemanager/images/delete.png"%}" style="width:16px;height:16px" width="100%" height="100%"/><span>Delete</span>
   </div>
+ <div id="share-file" class="menu-option" onclick="do_action('share','file')">
+   <img src="{% static "filemanager/images/share.png"%}" style="width:16px;height:16px" width="100%" height="100%"/><span>Share</span>
+  </div>
   {% if public_url_base %}
   <hr>
   <div id="copy-public-link-file" class="menu-option">
