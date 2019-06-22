@@ -184,6 +184,7 @@ function getPosition(e) {
 
 function rightclick_handle(e,id,type)
 { var c = getPosition(e);
+
   if(type == 'dom'){
     if(e.button==0){
     $('#dom-menu').hide();
@@ -202,7 +203,10 @@ function rightclick_handle(e,id,type)
       $('#paste-dir').show();
       $('#paste-dir').next().show();
     }
-    $('#dom-menu').show();
+       if (window.tag != 1) {
+           $('#dom-menu').show();
+       }
+       window.tag = 0
     }
   }
   else if(type == 'dir'){
@@ -217,13 +221,14 @@ function rightclick_handle(e,id,type)
     }
     else
     {
-      $('#paste-dir').show();
-      $('#paste-dir').next().show();
+       $('#paste-dir').show();
+       $('#paste-dir').next().show();
     }
-    $('#dir-menu').show();
+      $('#dir-menu').show();
     }
   }
   else if(type == 'file'){
+      window.tag = 1
     if(e.button==2){
     selected_file = id;
     $('.unzip-menu').hide();
@@ -234,6 +239,7 @@ function rightclick_handle(e,id,type)
     $('#file-menu').css('left',c.x+8);
     $('#file-menu').css('top',c.y+2);
     $('#file-menu').show();
+     $('#dir-menu').hide();
     if(!zclip){
       zclip = true;
       $('#copy-public-link-file').zclip({
@@ -257,6 +263,48 @@ function rightclick_handle(e,id,type)
   }
 }
 
+function openDialog() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    window.tag = 1
+    window.span = document.getElementsByClassName("close")[0];
+    window.span.onclick = function() {
+
+    var modal = document.getElementById("myModal");
+   modal.style.display = "none";
+}
+}
+
+function closeDialog() {
+  document.getElementById("myModal").style.display = "none";
+}
+
+
+
+
+// When the user clicks on <span> (x), close the modal
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    var modal = document.getElementById("myModal");
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+function redirect(t)
+{
+    	window.location = "http://www.google.com/"
+}
 function do_action(act,t)
 {var heading;
  if(t == 'dom')
@@ -315,6 +363,13 @@ function do_action(act,t)
   if(act == 'cut'){ clipboard['empty']=false;clipboard['type']='file';clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='cut';return;}
   if(act == 'copy'){ clipboard['empty']=false;clipboard['type']='file';clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='copy';return;}
   if(act == 'unzip'){clipboard['empty']=false;clipboard['type']='file';clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='unzip';form_submit(clipboard['mode'],clipboard['type'],'');return;}
+
+  if(act == 'share')
+  {
+      document.getElementById('myModal').style.display='block'
+      return
+
+  }
  }
  action = act;
  type = t;
