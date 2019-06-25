@@ -476,7 +476,7 @@ class FileManager(object):
             tarred.close()
             return response
 
-    def render(self, request, path):
+    def render(self, request, path, users = None):
         if 'download' in request.GET:
             return self.download(path, request.GET['download'])
         if path:
@@ -506,5 +506,6 @@ class FileManager(object):
                 'space_consumed': space_consumed,
                 'max_space': self.maxspace,
                 'show_space': settings.FILEMANAGER_SHOW_SPACE,
+                'users':users
             }
         )

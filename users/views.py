@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
+from django.contrib.auth.models import User
 from django.conf import settings
 from filemanager import FileManager
 import os
@@ -32,8 +33,9 @@ def register(request):
 def view(request, path):
     extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png','pdf','mp3']
     user = request.user
+    users = User.objects.all()
     fm = FileManager(settings.MEDIA_ROOT+"/"+user.username, extensions=extensions)
-    return fm.render(request,path)
+    return fm.render(request,path,users)
 
 
 @login_required
