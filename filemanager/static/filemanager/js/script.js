@@ -1,5 +1,6 @@
 var action,type;
 var selected_dir_id,selected_file;
+var selected_path
 var zclip = false;
 
 function get_human_string(val)
@@ -229,8 +230,11 @@ function rightclick_handle(e,id,type)
   }
   else if(type == 'file'){
       window.tag = 1
+
     if(e.button==2){
     selected_file = id;
+    selected_path = get_path(dir_id)+selected_file
+
     $('.unzip-menu').hide();
     var ext = selected_file.substr(selected_file.lastIndexOf('.') + 1);
     if(ext=='zip'){
@@ -268,12 +272,19 @@ function openDialog() {
     modal.style.display = "block";
     window.tag = 1
     window.span = document.getElementsByClassName("close")[0];
+    clipboard['empty']=false;clipboard['type']='file';
+    clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='share'
     window.span.onclick = function() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
 
-    var modal = document.getElementById("myModal");
-   modal.style.display = "none";
 }
-}
+
+
+
+
+
 
 function closeDialog() {
   document.getElementById("myModal").style.display = "none";
@@ -306,7 +317,9 @@ function redirect(t)
     	window.location = "http://www.google.com/"
 }
 function do_action(act,t)
-{var heading;
+{var heading
+    debugger
+alert('test')
  if(t == 'dom')
  {if(act == 'add')heading = "Enter name of the new folder";
   if(act == 'paste')
@@ -366,7 +379,11 @@ function do_action(act,t)
 
   if(act == 'share')
   {
+      alert("share")
+      clipboard['empty']=false;clipboard['type']='file';
+      clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='share'
       document.getElementById('myModal').style.display='block'
+
       return
 
   }
@@ -446,7 +463,7 @@ function form_submit(action,type,value){
 
 function myFunction2() {
     var input, filter, ul, li, a, i, txtValue;
-    //alert('myFunction2')
+    alert('myFunction2')
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     ul = document.getElementById("myUL");
@@ -461,3 +478,6 @@ function myFunction2() {
         }
     }
 }
+
+
+

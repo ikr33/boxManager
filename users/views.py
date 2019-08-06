@@ -37,6 +37,11 @@ def view(request, path):
     fm = FileManager(settings.MEDIA_ROOT+"/"+user.username, extensions=extensions)
     return fm.render(request,path,users)
 
+@login_required
+def share(request,path,user2):
+
+    return render(request,'docs/sendshare.html',{'path':path,'user1':request.user,'user2':user2})
+
 
 @login_required
 def profile(request):

@@ -48,7 +48,8 @@ urlpatterns = [
          name="password_reset_complete"),
     path('blog/', include('blog.urls')),
     path('', include('docs.urls')),
-    url(r'^docs/browse/'+path_end,user_views.view, name='view')
+    url(r'^docs/browse/'+path_end,user_views.view, name='view'),
+    url(r'^docs/share/' +path_end, user_views.share, name='share')
 
 ]
 
