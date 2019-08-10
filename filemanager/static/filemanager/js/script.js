@@ -281,6 +281,16 @@ function openDialog() {
 
 }
 
+  function triggerMe1(i) {
+
+   var link =  document.getElementById('linkid'+i)
+        debugger
+   alert('trigger')
+
+        link.href = "/docs/share"+clipboard['path']+"&"+i
+
+
+}
 
 
 
@@ -318,8 +328,6 @@ function redirect(t)
 }
 function do_action(act,t)
 {var heading
-    debugger
-alert('test')
  if(t == 'dom')
  {if(act == 'add')heading = "Enter name of the new folder";
   if(act == 'paste')
@@ -379,7 +387,6 @@ alert('test')
 
   if(act == 'share')
   {
-      alert("share")
       clipboard['empty']=false;clipboard['type']='file';
       clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='share'
       document.getElementById('myModal').style.display='block'
@@ -463,7 +470,6 @@ function form_submit(action,type,value){
 
 function myFunction2() {
     var input, filter, ul, li, a, i, txtValue;
-    alert('myFunction2')
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     ul = document.getElementById("myUL");
@@ -479,5 +485,13 @@ function myFunction2() {
     }
 }
 
+ function triggerMe1(i) {
 
+   var link =  document.getElementById('linkid'+i)
+
+
+        link.href = "/docs/generate/"+i + clipboard['path']
+
+
+}
 

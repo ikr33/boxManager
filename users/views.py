@@ -6,7 +6,10 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.models import User
 from django.conf import settings
 from filemanager import FileManager
+
 import os
+from simplecrypt import encrypt, decrypt
+from base64 import b64encode, b64decode
 
 
 
@@ -38,9 +41,31 @@ def view(request, path):
     return fm.render(request,path,users)
 
 @login_required
-def share(request,path,user2):
+def generate(request,path,id):
+    user2 = User.objects.get(id=int(id))
+    link = "/docs/share/"+encryptLink(request.user.id, path, id)
+    return render(request,'docs/sendshare.html',{'path':path,'user1':request.user,'user2':user2.username,'link':link})
 
-    return render(request,'docs/sendshare.html',{'path':path,'user1':request.user,'user2':user2})
+@login_required
+def share(request,link):
+    info = decryptLink(link)
+    return render(request, 'docs/shared.html',{'link':info})
+
+def encryptLink(id1,path, id2):
+# encrypt link
+    total = str(id1) + "?" + path + "?" + id2
+    encrypted_total = encrypt(settings.SECRET_KEY_ENCRYPT, total)
+    encoded_encrypted_total = b64encode(encrypted_total)
+
+    return encoded_encrypted_total.decode() # convert from b'string' to string
+
+def decryptLink(str_encoded_encrypted):
+    encoded_encrypted = str_encoded_encrypted.encode()
+    decoded_encrypted = b64decode(encoded_encrypted)
+    link = decrypt(settings.SECRET_KEY_ENCRYPT,decoded_encrypted)
+    return link
+
+
 
 
 @login_required

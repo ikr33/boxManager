@@ -198,7 +198,7 @@
                     {% for user1 in users %}
                        <!--li class="list-group-item">{{ user1.username }}-->
 
-                        <li><a href="#"  id ='linkid{{user1.id}}' onclick=" triggerMe1({{ user1.id }})">{{ user1.username }}  <script> document.write(clipboard['path'])</script></a></li>
+                        <li><a href="#"  id ='linkid{{user1.id}}' onclick=" triggerMe1({{ user1.id }})">{{ user1.username }}  </a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -207,13 +207,14 @@
 
     </div>
    <script>
-    function triggerMe1(i) {
+    function triggerMe2(i) {
 
    var link =  document.getElementById('linkid'+i)
         debugger
    alert('trigger')
-    //link.href = "/docs/share"+clipboard['path']+"&"+i
-     link.href = "murka!"
+
+        link.href = "/docs/share"+clipboard['path']+"&"+i
+
 
 }
     </script>

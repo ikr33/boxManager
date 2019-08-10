@@ -23,6 +23,7 @@ from users import views as user_views
 from filebrowser.sites import site
 from django.conf.urls import url
 from filemanager import path_end
+from django.urls import path, re_path
 
 
 urlpatterns = [
@@ -49,8 +50,14 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('', include('docs.urls')),
     url(r'^docs/browse/'+path_end,user_views.view, name='view'),
-    url(r'^docs/share/' +path_end, user_views.share, name='share')
+   # url(r'^docs/share/'+'(?P<id>[0-9])'+'/(?P<path>[\w\d_ -/.]*)$', user_views.share, name='share'),
+#    re_path(r'^docs/share/' + '(<int:id>)' + '/(?P<path>[\w\d_ -/.]*)$', user_views.share, name='share'),
 
+    url(r'^docs/generate/' + '(?P<id>[0-9]+)' + '/(?P<path>[\w\d_ -/.]*)$', user_views.generate, name='generate'),
+   #url(r'^docs/share/' + '(?P<id>[0-9]{3})' + '/(?P<path>[\w\d_ -/.]*)$', user_views.share, name='share'),
+
+
+    url(r'^docs/share/(?P<link>[\S\-]+)/$',user_views.share, name="share")
 ]
 
 if settings.DEBUG:
