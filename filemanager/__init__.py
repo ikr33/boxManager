@@ -60,6 +60,7 @@ class FileManager(object):
         self.maxfilesize = maxfilesize
         self.extensions = extensions
         self.public_url_base = public_url_base
+        self.sharepath = ''
 
     def rename_if_exists(self, folder, file):
         if folder[-1] != os.sep:
@@ -364,7 +365,7 @@ class FileManager(object):
 
         return messages
 
-    def directory_structure(self):
+    def directory_structure(self,fileName=None):
         self.idee = 0
         dir_structure = {
             '': {
@@ -374,6 +375,12 @@ class FileManager(object):
                 'files': [],
             },
         }
+
+        if fileName != None:
+            dir_structure['']['files'].append(fileName)
+            return dir_structure
+
+
         os.chdir(self.basepath)
         for directory, directories, files in os.walk('.'):
             directory_list = directory[1:].split('/')
@@ -413,8 +420,8 @@ class FileManager(object):
             mx = max([width, height])
             w, h = width, height
             if mx > 60:
-                w = width*60/mx
-                h = height*60/mx
+                w = int(width*60/mx)
+                h = int(height*60/mx)
             img = img.resize((w, h), Image.ANTIALIAS)
             response = HttpResponse(content_type=mimetype or "image/" + ext)
             response['Cache-Control'] = 'max-age=3600'
@@ -476,10 +483,10 @@ class FileManager(object):
             tarred.close()
             return response
 
-    def render(self, request, path, users = None):
+    def render(self, request, path, users = None,share=False):
         if 'download' in request.GET:
             return self.download(path, request.GET['download'])
-        if path:
+        if path and share is False:
             return self.media(path)
         CKEditorFuncNum = request.GET.get('CKEditorFuncNum', '')
         messages = []
@@ -493,11 +500,16 @@ class FileManager(object):
                 space_consumed = self.get_size(self.basepath)
         else:
                 space_consumed = 0
+
+        if share is False:
+            dir_struct = self.directory_structure()
+        else:
+            dir_struct = self.directory_structure(path)
         return render(
             request,
             'filemanager/index.html',
             {
-                'dir_structure': self.directory_structure(),
+                'dir_structure': dir_struct,
                 'messages': list(map(str, messages)),
                 'current_id': self.current_id,
                 'CKEditorFuncNum': CKEditorFuncNum,

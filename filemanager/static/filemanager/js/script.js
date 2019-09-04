@@ -284,7 +284,7 @@ function openDialog() {
   function triggerMe1(i) {
 
    var link =  document.getElementById('linkid'+i)
-        debugger
+
    alert('trigger')
 
         link.href = "/docs/share"+clipboard['path']+"&"+i
@@ -328,27 +328,29 @@ function redirect(t)
 }
 function do_action(act,t)
 {var heading
- if(t == 'dom')
- {if(act == 'add')heading = "Enter name of the new folder";
-  if(act == 'paste')
-  { 
-    if(clipboard['empty'])
-    {
-      alert('Clipboard is empty. Please cut/copy the required file.');
-      return;
-    }
-    if(get_path(dir_id).indexOf(clipboard['path']) == 0)
-    {
-      alert('Cannot move/copy to the folder');
-      return;
-    }
-    if(window.confirm(clipboard['mode']+' '+clipboard['path'] + ' to '+get_path(dir_id)))
-    {
-        form_submit(clipboard['mode'],'', '');
-    }
-    return;
-  }
-  if(act == 'download'){window.open('.'+get_path(selected_dir_id)+'?download=dir');return;}
+
+ if(t == 'dom') {
+     if (act == 'add') heading = "Enter name of the new folder";
+     if (act == 'paste') {
+         if (clipboard['empty']) {
+             alert('Clipboard is empty. Please cut/copy the required file.');
+             return;
+         }
+         if (get_path(dir_id).indexOf(clipboard['path']) == 0) {
+             alert('Cannot move/copy to the folder');
+             return;
+         }
+         if (window.confirm(clipboard['mode'] + ' ' + clipboard['path'] + ' to ' + get_path(dir_id))) {
+             form_submit(clipboard['mode'], '', '');
+         }
+         return;
+     }
+     if (act == 'download') {
+
+         alert("here download?")
+         window.open('.' + get_path(selected_dir_id) + '?download=dir');
+         return;
+     }
  }
  if(t == 'dir')
  {if(act == 'add')heading = "Enter name of sub-folder";
@@ -376,10 +378,19 @@ function do_action(act,t)
     return;
   }
  }
+
+
  if(t == 'file')
  {if(act == 'rename')heading = "Enter new name of file";
   if(act == 'delete'){form_submit(act,t);return;}
-  if(act == 'download'){window.open('.'+get_path(dir_id)+selected_file+'?download=file');return;}
+  if(act == 'download')
+
+  {
+      str1 = '.'+get_path(dir_id)+'?download=dir'
+      str2 = get_path(dir_id)
+      window.open('.'+get_path(dir_id)+selected_file+'?download=file');return;
+
+  }
   if(act == 'copy-public-link'){window.prompt("Public URL(Ctrl+C to copy to clipboard):",public_url_base+get_path(dir_id)+selected_file);return;}
   if(act == 'cut'){ clipboard['empty']=false;clipboard['type']='file';clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='cut';return;}
   if(act == 'copy'){ clipboard['empty']=false;clipboard['type']='file';clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='copy';return;}

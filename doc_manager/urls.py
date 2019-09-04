@@ -49,6 +49,7 @@ urlpatterns = [
          name="password_reset_complete"),
     path('blog/', include('blog.urls')),
     path('', include('docs.urls')),
+    url(r'^docs/browse/filemanager' + path_end, user_views.viewimages, name='viewimages'),
     url(r'^docs/browse/'+path_end,user_views.view, name='view'),
    # url(r'^docs/share/'+'(?P<id>[0-9])'+'/(?P<path>[\w\d_ -/.]*)$', user_views.share, name='share'),
 #    re_path(r'^docs/share/' + '(<int:id>)' + '/(?P<path>[\w\d_ -/.]*)$', user_views.share, name='share'),
@@ -57,7 +58,13 @@ urlpatterns = [
    #url(r'^docs/share/' + '(?P<id>[0-9]{3})' + '/(?P<path>[\w\d_ -/.]*)$', user_views.share, name='share'),
 
 
-    url(r'^docs/share/(?P<link>[\S\-]+)/$',user_views.share, name="share")
+    url(r'^docs/share/(?P<link>[\S\-]+)/$',user_views.share, name="share"),
+    url(r'^docs/viewshared/filemanager' + path_end, user_views.viewimages, name='viewimages'),
+    url(r'^docs/viewshared/(?P<path>[\S\-]+)/$', user_views.viewshared, name="viewshared"),
+    url(r'^docs/viewshared/$', user_views.viewshared, name="viewshared1"),
+    #url(r'^docs/viewshared/(?P<path>[\w\d_ -/.]*)$', user_views.viewshared, name="viewshared")
+
+
 ]
 
 if settings.DEBUG:
