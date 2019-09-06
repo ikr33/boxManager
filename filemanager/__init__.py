@@ -492,6 +492,7 @@ class FileManager(object):
         messages = []
         self.current_path = '/'
         self.current_id = 1
+        self.current_user = request.user;
         if request.method == 'POST':
             form = FileManagerForm(request.POST, request.FILES)
             if form.is_valid():
@@ -518,6 +519,7 @@ class FileManager(object):
                 'space_consumed': space_consumed,
                 'max_space': self.maxspace,
                 'show_space': settings.FILEMANAGER_SHOW_SPACE,
-                'users':users
-            }
+                'users':users,
+                'current_user':self.current_user}
+
         )

@@ -196,9 +196,10 @@
             <div class="well" style="max-height: 300px;overflow: auto;">
                 <ul class="list-group checked-list-box">
                     {% for user1 in users %}
-                       <!--li class="list-group-item">{{ user1.username }}-->
+                        {%  if current_user.username != user1.username %}
+                            <li><a href="#"  id ='linkid{{user1.id}}' onclick=" triggerMe1({{ user1.id }})">{{ user1.username }}  </a></li>
+                        {% endif %}
 
-                        <li><a href="#"  id ='linkid{{user1.id}}' onclick=" triggerMe1({{ user1.id }})">{{ user1.username }}  </a></li>
                     {% endfor %}
                 </ul>
             </div>
