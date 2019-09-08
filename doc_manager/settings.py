@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'grappelli',
     'filebrowser',
     'filemanager',
+    'phone_field',
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'docs.apps.DocsConfig',

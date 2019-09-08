@@ -64,6 +64,8 @@ urlpatterns = [
     url(r'^docs/viewshared/$', user_views.viewshared, name="viewshared1"),
     #url(r'^docs/viewshared/(?P<path>[\w\d_ -/.]*)$', user_views.viewshared, name="viewshared")
 
+    url(r'^docs/emailshare/$', user_views.sharebyemail, name="emailshare"),
+    url(r'^docs/smsshare/$', user_views.sharebysms, name="smsshare"),\
 
 ]
 

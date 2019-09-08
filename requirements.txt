@@ -3,7 +3,10 @@ django-crispy-forms==1.7.2
 django-filebrowser==3.11.1
 -e git+https://github.com/IMGIITRoorkee/django-filemanager.git@c161f303666e6042292c09d23d432315ba330287#egg=django_filemanager
 django-grappelli==2.12.2
+django-phone-field==1.8.0
 Pillow==6.0.0
+pycrypto==2.6.1
 python-magic==0.4.15
 pytz==2018.9
+simple-crypt==4.1.7
 sqlparse==0.3.0

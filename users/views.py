@@ -99,7 +99,7 @@ def viewshared(request,path=''):
 def generate(request,path,id):
     user2 = User.objects.get(id=int(id))
     link = "/docs/share/"+encryptLink(request.user.id, path, id)
-    return render(request,'docs/sendshare.html',{'path':path,'user1':request.user,'user2':user2.username,'link':link})
+    return render(request,'docs/sendshare.html',{'path':path,'user1':request.user,'user2':user2,'link':link})
 
 @login_required
 def share(request, link):
@@ -154,3 +154,12 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'users/profile.html', context)
+
+
+@login_required
+def sharebyemail(request):
+    pass
+
+@login_required
+def sharebysms(request):
+    pass

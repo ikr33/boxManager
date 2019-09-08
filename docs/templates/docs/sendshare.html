@@ -2,10 +2,41 @@
 {% load static %}
 {% block content %}
 
+   <div style="width:600px;border-color:green;">
 
-<h3> generating secure link to share files  {{  path }} by user {{ user1 }} with user {{ user2 }}</h3>
-<h1 class="clearlooks2"> {{ link }}</h1>
+    <h3  > a secure link is generated to share file: {{ path }} by user: {{ user1 }} for user:{{ user2 }}</h3>
 
-<a class="clearlooks2" href="{{ link }}">{{ link }}</a>
+    <a class="clearlooks2" href="{{ link }}">{{ link }}</a>
 
+    <p>
+
+    </p>
+
+   </div>
+    <h1> Share link  with user: {{ user2 }}</h1>
+    <div class="container">
+
+        <div class="row">
+            <div class="jumbotron">
+
+
+<div class="input-group input-group-lg">
+  <input type="text" class="form-control" placeholder="Full Name" value="{{ user2.email }}" readonly>
+  <span class="input-group-btn-lg">
+    <a href="{% url 'emailshare' %}" class="btn btn-lg" role="button" style="color:white;background-color: #007bff" >email</a>
+  </span>
+</div>
+                <br>
+                <div class="input-group input-group-lg">
+  <input type="text" class="form-control" placeholder="Full Name" value="{{ user2.profile.phone.formatted}}" readonly>
+  <span class="input-group-btn-lg">
+    <button class="btn btn-lg" type="button" style="color:white;;background-color: #007bff">sms &nbsp; </>
+  </span>
+</div>
+
+            </div>
+
+
+        </div>
+    </div>
 {% endblock content %}
