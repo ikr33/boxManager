@@ -19,11 +19,13 @@
         <div class="row">
             <div class="jumbotron">
 
-
+  <input type="text" class="form-control" maxlength="50"  placeholder="Add your note to your message, max(50 char)">
+<p></p>
 <div class="input-group input-group-lg">
+
   <input type="text" class="form-control" placeholder="Full Name" value="{{ user2.email }}" readonly>
   <span class="input-group-btn-lg">
-    <a href="{% url 'emailshare' %}" class="btn btn-lg" role="button" style="color:white;background-color: #007bff" >email</a>
+    <a href="{% url 'emailshare' %}?link={{ link }}&email={{ user2.email }}&note=note" class="btn btn-lg" role="button" style="color:white;background-color: #007bff" >email</a>
   </span>
 </div>
                 <br>

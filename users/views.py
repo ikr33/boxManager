@@ -11,6 +11,7 @@ import os
 from simplecrypt import encrypt, decrypt
 from base64 import b64encode, b64decode
 from django.shortcuts import redirect
+import users.utils as utilities
 
 
 # Create your views here.
@@ -78,7 +79,7 @@ def viewshared(request,path=''):
 
         if user.id != id1 and user.id != id2:
             errorstring = 'no authorized user:'+user.username
-            response = redirect('/docs/errors')
+            # response = redirect('/docs/errors')
             return render(request, 'users/error.html', {'errorstring': errorstring})
 
 
@@ -158,7 +159,16 @@ def profile(request):
 
 @login_required
 def sharebyemail(request):
-    pass
+    email = request.GET['email']
+    host = request.get_host()
+    note = request.GET['note']
+    link = host + request.GET['link']
+    user = request.user
+    response = utilities.sharelinkbymail(request, user,email,link,note)
+
+    return response
+
+
 
 @login_required
 def sharebysms(request):
