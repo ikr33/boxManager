@@ -1,12 +1,21 @@
+certifi==2019.6.16
+chardet==3.0.4
 Django==2.1.7
 django-crispy-forms==1.7.2
 django-filebrowser==3.11.1
 -e git+https://github.com/IMGIITRoorkee/django-filemanager.git@c161f303666e6042292c09d23d432315ba330287#egg=django_filemanager
 django-grappelli==2.12.2
 django-phone-field==1.8.0
+idna==2.8
 Pillow==6.0.0
 pycrypto==2.6.1
+PyJWT==1.7.1
+PySocks==1.7.0
 python-magic==0.4.15
 pytz==2018.9
+requests==2.22.0
 simple-crypt==4.1.7
+six==1.12.0
 sqlparse==0.3.0
+twilio==6.30.0
+urllib3==1.25.3
