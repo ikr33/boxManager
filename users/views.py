@@ -164,7 +164,7 @@ def sharebyemail(request):
     note = request.GET['note']
     link = host + request.GET['link']
     user = request.user
-    response = utilities.sharelinkbymail(request, user,email,link,note)
+    response = utilities.sharelinkbyemail(request, user,email,link,note)
 
     return response
 
@@ -172,4 +172,13 @@ def sharebyemail(request):
 
 @login_required
 def sharebysms(request):
-    pass
+    phone = request.GET['sms']
+    if len(phone) == 11:
+        phone = '+'+phone
+    host = request.get_host()
+    note = request.GET['note']
+    link = host + request.GET['link']
+    user = request.user
+
+    response = utilities.sharelinkbysms(request, user, phone, link, note)
+    return response

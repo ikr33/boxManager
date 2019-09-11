@@ -4,7 +4,6 @@
 
       <script>
         function triggerMail() {
-            alert('triggerMail');
             let note = document.getElementById('note');
 
             let link1 = document.getElementById('linkmail');
@@ -15,7 +14,22 @@
 
             link1.href = "{% url 'emailshare' %}?link="+res + "&email={{ user2.email }}&note=\"" + note.value + "\"";
 
-            alert(link1.href)
+        }
+
+             function triggerSMS() {
+            let note = document.getElementById('note');
+
+            let link1 = document.getElementById('linksms');
+
+            let link2 = "{{ link }}";
+
+            let reslink = link2.replace(/\+/g,"%2B");
+
+            let phone2 = String({{user2.profile.phone.raw_phone}});
+
+            let resphone = phone2.replace(/\+/g,"%2B");
+
+            link1.href = "{% url 'smsshare' %}?link="+reslink + "&sms="+resphone+"&note=\"" + note.value + "\"";
 
         }
     </script>
@@ -52,7 +66,8 @@
                     <input type="text" class="form-control" placeholder="Full Name"
                            value="{{ user2.profile.phone.formatted }}" readonly>
                     <span class="input-group-btn-lg">
-    <button class="btn btn-lg" type="button" style="color:white;;background-color: #007bff">sms &nbsp; </button>
+    <a href=# class="btn btn-lg" type="button" id="linksms" style="color:white;;background-color: #007bff"
+        onclick="triggerSMS()">sms &nbsp; </a>
   </span>
                 </div>
 

@@ -4,7 +4,7 @@ from email.message import EmailMessage
 from django.shortcuts import render, redirect
 import sys
 from django.http import HttpResponse
-
+from twilio.rest import Client
 
 def sendmail(sender, receiver, subject, messagebody, note, attachments=None):
     contacts = [receiver]
@@ -34,20 +34,50 @@ def sendmail(sender, receiver, subject, messagebody, note, attachments=None):
         smtp.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
         smtp.send_message(msg)
 
-
-
-def sharelinkbymail(request, user1, email, link,note=""):
-    subject = "this link was shared by a user:"+ user1.username
+def sharelinkbyemail(request, user1, email, link, note=""):
+    subject = "this link was shared by a user:" + user1.username
     body = link
 
     sender = user1.email
 
-
     try:
-        sendmail(settings.EMAIL_HOST_USER, email, subject, body,note)
+        sendmail(settings.EMAIL_HOST_USER, email, subject, body, note)
     except:
         e = sys.exc_info()[0]
         return render(request, 'users/error.html', {'errorstring': e})
 
     infostring = "email successfully sent"
     return render(request, 'users/info.html', {'infostring': infostring})
+
+
+def sharelinkbysms(request, user1, recieverphone, link,note=""):
+    subject = "link from  user:"+ user1.username
+    message = subject + " " + note+"  " + link
+
+    callerphone = user1.profile.phone
+
+
+    try:
+        sendsms(callerphone,recieverphone,  message)
+    except:
+        e = sys.exc_info()[0]
+        return render(request, 'users/error.html', {'errorstring': e})
+
+    infostring = "sms successfully sent"
+    return render(request, 'users/info.html', {'infostring': infostring})
+
+
+
+def sendsms(callerphone,receiverphone,  message):
+
+
+    account_sid = 'AC402dca95b3692b74e90ba70619f0a1cc'
+    auth_token = '6beb87db0f923363ba5b15848d870184'
+    client = Client(account_sid, auth_token)
+
+
+    message = client.messages.create(
+        body= message,
+        from_="+16503824369",
+        to=receiverphone
+    )
