@@ -182,6 +182,12 @@ function getPosition(e) {
    }
    return cursor;
 }
+function doubleclick_handle(e,type)
+{
+    alert('double click')
+    return
+}
+
 
 function rightclick_handle(e,id,type)
 { var c = getPosition(e);
