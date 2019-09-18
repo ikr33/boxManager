@@ -44,7 +44,7 @@ class FileManager(object):
         basepath,
         ckeditor_baseurl='',
         maxfolders=50,
-        maxspace=5*1024,
+        maxspace=50*1024,
         maxfilesize=5*1024,
         public_url_base=None,
         extensions=None,
