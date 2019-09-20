@@ -70,9 +70,8 @@ def sharelinkbysms(request, user1, recieverphone, link,note=""):
 
 def sendsms(callerphone,receiverphone,  message):
 
-
-    account_sid = 'AC402dca95b3692b74e90ba70619f0a1cc'
-    auth_token = '6beb87db0f923363ba5b15848d870184'
+    account_sid = settings.ACCOUNT_SID
+    auth_token = settings.AUTH_TOKEN
     client = Client(account_sid, auth_token)
 
 
