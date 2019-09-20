@@ -455,6 +455,24 @@ class FileManager(object):
             img.save(response, 'png')
             return response
 
+    def viewfile(self,path,file_or_dir):
+        if not re.match(r'[\w\d_ -/]*', path).group(0) == path:
+            return HttpResponse('Invalid path')
+        if file_or_dir == 'file':
+            filepath = self.basepath + '/' + path
+            with open(filepath, 'rb') as f:
+                response = HttpResponse(
+                    f.read(),
+                    content_type=mimetypes.guess_type(filepath)[0],
+                )
+            response['Content-Length'] = os.path.getsize(filepath)
+            response['Content-Disposition'] = (
+                    'inline; filename=' + path.split('/')[-1]
+            )
+            return response
+        else:
+            return HttpResponse('cannot view dir')
+
     def download(self, path, file_or_dir):
         if not re.match(r'[\w\d_ -/]*', path).group(0) == path:
             return HttpResponse('Invalid path')
@@ -486,6 +504,8 @@ class FileManager(object):
     def render(self, request, path, users = None,share=False):
         if 'download' in request.GET:
             return self.download(path, request.GET['download'])
+        if 'view' in request.GET:
+            return self.viewfile(path, request.GET['view'])
         if path and share is False:
             return self.media(path)
         CKEditorFuncNum = request.GET.get('CKEditorFuncNum', '')

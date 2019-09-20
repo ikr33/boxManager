@@ -107,6 +107,13 @@ function CKEditorRepy(filename)
   window.close();
 }
 
+function view_file(id)
+{
+
+    selected_file = id;
+    do_action('view','file');
+}
+
 function show_files(id)
 { dir_id = id;
   var dirs = [];
@@ -135,7 +142,7 @@ function show_files(id)
   for(f in files)
   { var ext = files[f].split('.')[(files[f].split('.').length-1)];
     $('#content').append("<div class='file' title='"+escape(files[f])+"'"+
-       "onmousedown='rightclick_handle(event,\""+escape(files[f])+"\",\"file\");'><div class='thumbnail'>"+
+       "onmousedown='rightclick_handle(event,\""+escape(files[f])+"\",\"file\"); ' ondblclick='view_file(\""+escape(files[f])+"\",\"file\")' ><div class='thumbnail'>"+
        "<div style=\"background-image:url('"+get_path(id).substr(1)+escape(files[f])+"');\" width='100%' height='100%' ></div></div>"+
        "<div class='filename'>"+files[f]+"</div></div>\n");
   }
@@ -182,7 +189,7 @@ function getPosition(e) {
    }
    return cursor;
 }
-function doubleclick_handle(e,type)
+function doubleclick_handle(e,id,type)
 {
     alert('double click')
     return
@@ -353,10 +360,10 @@ function do_action(act,t)
      }
      if (act == 'download') {
 
-         alert("here download?")
          window.open('.' + get_path(selected_dir_id) + '?download=dir');
          return;
      }
+
  }
  if(t == 'dir')
  {if(act == 'add')heading = "Enter name of sub-folder";
@@ -397,6 +404,13 @@ function do_action(act,t)
       window.open('.'+get_path(dir_id)+selected_file+'?download=file');return;
 
   }
+   if(act == 'view')
+
+  {
+      str1 = get_path(dir_id)
+      window.open('.'+get_path(dir_id)+selected_file+'?view=file');return;
+  }
+
   if(act == 'copy-public-link'){window.prompt("Public URL(Ctrl+C to copy to clipboard):",public_url_base+get_path(dir_id)+selected_file);return;}
   if(act == 'cut'){ clipboard['empty']=false;clipboard['type']='file';clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='cut';return;}
   if(act == 'copy'){ clipboard['empty']=false;clipboard['type']='file';clipboard['path']=get_path(dir_id)+selected_file;clipboard['mode']='copy';return;}

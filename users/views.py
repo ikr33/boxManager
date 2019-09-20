@@ -36,6 +36,7 @@ def register(request):
 @login_required
 def view(request, path):
     extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png','pdf','mp3']
+    extensions.extend(list(map(str.upper,extensions))) # add capital extensions (niv)
     user = request.user
     users = User.objects.all()
 
@@ -52,6 +53,7 @@ def view(request, path):
 @login_required
 def viewimages(request, path):
     extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png','pdf','mp3']
+    extensions.extend(list(map(str.upper,extensions))) # add capital extensions (niv)
     users = User.objects.all()
 
     fm = FileManager(settings.MEDIA_ROOT+"/", extensions=extensions)
@@ -60,6 +62,7 @@ def viewimages(request, path):
 @login_required
 def viewshared(request,path=''):
     extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png','pdf','mp3']
+    extensions.extend(list(map(str.upper,extensions))) # add capital extensions (niv)
     user = request.user
     users = User.objects.all()
     if 'temp' in request.session:
@@ -105,6 +108,8 @@ def generate(request,path,id):
 @login_required
 def share(request, link):
     extensions = ['html','htm','zip','py,''css','js','jpeg','jpg','png','pdf','mp3']
+
+    extensions.extend(list(map(str.upper,extensions))) # add capital extensions (niv)
 
 
     linkinfo = decryptLink(link).decode()
