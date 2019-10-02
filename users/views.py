@@ -217,17 +217,18 @@ def sharebyemail(request):
 @login_required
 def sharebysms(request):
     user2id = request.GET['user2id']
-    phone = User.objects.get(id=user2id)
+    phone = User.objects.get(id=user2id).profile.phone.raw_phone
     if len(phone) == 11:
         phone = '+'+phone
+
     host = request.get_host()
     note = request.GET['note']
     link = host + request.GET['link']
     user = request.user
     user1id = user.id
-    exptime = request.GET('time')
+    exptime = request.GET['time']
 
     message_id= updateDatabase(user1id, user2id, link, note, exptime)
-    link = link + "&" + str(message_id)
+  #  link = link + "&" + str(message_id)
     response = utilities.sharelinkbysms(request, user, phone, link, note)
     return response

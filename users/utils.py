@@ -56,14 +56,16 @@ def sharelinkbysms(request, user1, recieverphone, link,note=""):
 
     callerphone = user1.profile.phone
 
-
+    sid = ""
     try:
-        sendsms(callerphone,recieverphone,  message)
+        sid = sendsms(callerphone,recieverphone,  message)
     except:
         e = sys.exc_info()[0]
-        return render(request, 'users/error.html', {'errorstring': e})
 
-    infostring = "sms successfully sent"
+
+        return render(request, 'users/error.html', {'errorstring': e+str(sid)})
+
+    infostring = "sms successfully sent:info("+str(sid)+")"
     return render(request, 'users/info.html', {'infostring': infostring})
 
 
@@ -80,3 +82,5 @@ def sendsms(callerphone,receiverphone,  message):
         from_="+16503824369",
         to=receiverphone
     )
+
+    return message.sid

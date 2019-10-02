@@ -37,7 +37,7 @@
 
              function triggerSMS() {
             let note = document.getElementById('note');
-              let time = parseInt(document.querySelector('#select_time').selectedOptions[0].value);
+            let time = parseInt(document.querySelector('#select_time').selectedOptions[0].value);
             let linktime = ''
             let num = 0
             switch (time) {
@@ -67,7 +67,7 @@
 
             let resphone = phone2.replace(/\+/g,"%2B");
 
-            link1.href = "{% url 'smsshare' %}?link="+reslink + "&user2id"+user2id+"&note=\"" + note.value + "\"";
+            link1.href = "{% url 'smsshare' %}?link="+reslink + "&user2id="+user2id+"&time="+linktime+"&note=\"" + note.value + "\"";
 
         }
     </script>
