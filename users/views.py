@@ -229,6 +229,6 @@ def sharebysms(request):
     exptime = request.GET['time']
 
     message_id= updateDatabase(user1id, user2id, link, note, exptime)
-  #  link = link + "&" + str(message_id)
+    link = link + "&" + str(message_id)
     response = utilities.sharelinkbysms(request, user, phone, link, note)
     return response
