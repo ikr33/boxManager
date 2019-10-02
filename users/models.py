@@ -21,3 +21,17 @@ class Profile(models.Model):
             output_size = (300,300)
             img.thumbnail(output_size)
             #img.save(self.Image_path))
+
+
+class SharedMessage(models.Model):
+    sender = models.ForeignKey(User,on_delete=models.CASCADE,related_name="sender")
+    receiver = models.ForeignKey(User,on_delete= models.CASCADE,related_name="receiver")
+    file_location = models.FilePathField(default="",max_length=300)
+    link = models.TextField(default='')
+    note = models.TextField(default='')
+    local_time = models.DateTimeField()
+    ust_time = models.DateTimeField()
+    exp_time = models.IntegerField()
+
+    def __str__(self):
+        return str(self.pk)

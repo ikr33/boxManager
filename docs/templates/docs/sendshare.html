@@ -5,20 +5,56 @@
       <script>
         function triggerMail() {
             let note = document.getElementById('note');
+            let time = parseInt(document.querySelector('#select_time').selectedOptions[0].value);
+            let linktime = ''
+            let num = 0
+            switch (time) {
+                case(0):
+                    linktime = "0"
+                    break;
+                case(1):
+                    linktime = "5"
+                    break;
+                case(2):
+                    linktime = "60"
+                    break;
+                case(3):
+                    num = 24*60
+                    linktime = num.toString()
 
+            }
             let link1 = document.getElementById('linkmail');
 
             let link2 = "{{ link }}"
 
             let res = link2.replace(/\+/g,"%2B")
 
-            link1.href = "{% url 'emailshare' %}?link="+res + "&email={{ user2.email }}&note=\"" + note.value + "\"";
+            let user2id = String({{ user2.id }})
+
+            link1.href = "{% url 'emailshare' %}?link="+res + "&user2id="+user2id+"&time="+linktime+"&note=\"" + note.value + "\"";
 
         }
 
              function triggerSMS() {
             let note = document.getElementById('note');
+              let time = parseInt(document.querySelector('#select_time').selectedOptions[0].value);
+            let linktime = ''
+            let num = 0
+            switch (time) {
+                case(0):
+                    linktime = "0"
+                    break;
+                case(1):
+                    linktime = "5"
+                    break;
+                case(2):
+                    linktime = "60"
+                    break;
+                case(3):
+                    num = 24*60
+                    linktime = num.toString()
 
+            }
             let link1 = document.getElementById('linksms');
 
             let link2 = "{{ link }}";
@@ -27,9 +63,11 @@
 
             let phone2 = String({{user2.profile.phone.raw_phone}});
 
+            let user2id = String({{ user2.id }})
+
             let resphone = phone2.replace(/\+/g,"%2B");
 
-            link1.href = "{% url 'smsshare' %}?link="+reslink + "&sms="+resphone+"&note=\"" + note.value + "\"";
+            link1.href = "{% url 'smsshare' %}?link="+reslink + "&user2id"+user2id+"&note=\"" + note.value + "\"";
 
         }
     </script>
@@ -49,7 +87,7 @@
     <div class ='jumbotron' style="width:403px">
     <strong> Select time for the link to expire: </strong>
 
-    <select>
+    <select id="select_time">
   <option value="0">None</option>
   <option value="1">5 min</option>
   <option value="2">1 hour</option>

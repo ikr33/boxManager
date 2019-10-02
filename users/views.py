@@ -12,6 +12,10 @@ from simplecrypt import encrypt, decrypt
 from base64 import b64encode, b64decode
 from django.shortcuts import redirect
 import users.utils as utilities
+from datetime import datetime
+import pytz
+
+from users.models import  SharedMessage
 
 
 # Create your views here.
@@ -111,6 +115,24 @@ def share(request, link):
 
     extensions.extend(list(map(str.upper,extensions))) # add capital extensions (niv)
 
+    parts = link.split('&')
+    link = parts[0]
+    if len(parts) >1:
+        message_id = parts[1]
+
+        # test expiration time
+
+        s = SharedMessage.objects.get(id=message_id)
+
+        t1 = pytz.utc.localize(datetime.utcnow())
+        t2 = s.ust_time
+
+        dt = t1-t2
+
+        if s.exp_time > 0 and dt.seconds > s.exp_time*60:
+            errorstring = "link is expired"
+            # response = redirect('/docs/errors')
+            return render(request, 'users/error.html', {'errorstring': errorstring})
 
     linkinfo = decryptLink(link).decode()
 
@@ -161,14 +183,31 @@ def profile(request):
     }
     return render(request, 'users/profile.html', context)
 
+def updateDatabase(id1,id2,link,note,exptime):
+    user1 = User.objects.get(id=id1)
+    user2 = User.objects.get(id=id2)
+    awaretime = pytz.utc.localize(datetime.utcnow())
+    s1 = SharedMessage(sender=user1,receiver=user2,link=link,note=note,local_time= datetime.now(),ust_time=awaretime,
+                       exp_time = exptime)
+    s1.save()
+
+    return s1.id
+
 
 @login_required
 def sharebyemail(request):
-    email = request.GET['email']
+
+    user2id = request.GET['user2id']
+    email = User.objects.get(id=user2id).email
     host = request.get_host()
     note = request.GET['note']
     link = host + request.GET['link']
+    exptime = request.GET['time']
     user = request.user
+    user1id = user.id
+
+    message_id = updateDatabase(user1id,user2id,link,note,exptime)
+    link = link + "&" + str(message_id)
     response = utilities.sharelinkbyemail(request, user,email,link,note)
 
     return response
@@ -177,13 +216,18 @@ def sharebyemail(request):
 
 @login_required
 def sharebysms(request):
-    phone = request.GET['sms']
+    user2id = request.GET['user2id']
+    phone = User.objects.get(id=user2id)
     if len(phone) == 11:
         phone = '+'+phone
     host = request.get_host()
     note = request.GET['note']
     link = host + request.GET['link']
     user = request.user
+    user1id = user.id
+    exptime = request.GET('time')
 
+    message_id= updateDatabase(user1id, user2id, link, note, exptime)
+    link = link + "&" + str(message_id)
     response = utilities.sharelinkbysms(request, user, phone, link, note)
     return response
