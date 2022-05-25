@@ -9,7 +9,7 @@ django-phone-field==1.8.0
 idna==2.8
 Pillow==6.0.0
 pycrypto==2.6.1
-PyJWT==1.7.1
+PyJWT==2.4.0
 PySocks==1.7.0
 python-magic==0.4.15
 pytz==2018.9
